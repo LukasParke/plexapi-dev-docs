@@ -48,4 +48,11 @@ See [docs/contributing.md](./docs/contributing.md) for content authoring guideli
 
 ## Deployment
 
-See [docs/deploy.md](./docs/deploy.md) for the current deploy target and hosting strategy.
+The docs are deployed to **Cloudflare Pages** automatically via GitHub Actions. Production deploys run on every push to `main`, and pull requests receive a unique preview URL.
+
+Required secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+See [docs/deploy.md](./docs/deploy.md) for full details.
