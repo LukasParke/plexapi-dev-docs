@@ -60,6 +60,10 @@ npx wrangler pages deploy docs/.vitepress/dist --project-name=plexapi-dev-docs -
 
 The canonical domain is `https://docs.plexapi.dev`. DNS and certificate setup are handled in the Cloudflare Pages dashboard.
 
+## Runbook
+
+For credential setup, least-privilege token permissions, verification commands, and rotation ownership, see [`runbooks/cloudflare-credentials.md`](../runbooks/cloudflare-credentials.md).
+
 ## Future work
 
 - Version the docs once multiple SDK versions need to be documented simultaneously.
