@@ -1,0 +1,35 @@
+{
+  "name": "@plexapi/monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PlexAPI.dev monorepo: canonical OpenAPI spec, SDKs, and documentation",
+  "packageManager": "pnpm@10.18.1",
+  "scripts": {
+    "docs:dev": "astro dev",
+    "docs:build": "astro build",
+    "docs:preview": "astro preview",
+    "spec:validate": "node scripts/validate-spec.mjs",
+    "spec:generate-reference": "node scripts/generate-reference.mjs",
+    "sdk:generate": "pnpm -r run generate",
+    "sdk:build": "pnpm -r run build",
+    "sdk:typecheck": "pnpm -r run typecheck",
+    "sdk:test": "pnpm -r run test",
+    "format": "prettier --write .",
+    "lint": "echo 'Lint not configured yet'"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.40.0",
+    "astro": "^6.4.5",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "@openapitools/openapi-generator-cli": "^2.20.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

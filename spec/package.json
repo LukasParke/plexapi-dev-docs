@@ -1,0 +1,15 @@
+{
+  "name": "@plexapi/spec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Canonical OpenAPI 3.x spec for the Plex Media Server API",
+  "license": "MIT",
+  "files": [
+    "plex-media-server.openapi.json"
+  ],
+  "scripts": {
+    "validate": "node ../scripts/validate-spec.mjs",
+    "generate-reference": "node ../scripts/generate-reference.mjs"
+  }
+}
