@@ -1,69 +1,18 @@
-# PlexAPI.dev Docs
+# PlexAPI.dev Developer Docs (consolidated)
 
-Developer documentation site for [PlexAPI.dev](https://plexapi.dev), built with [VitePress](https://vitepress.dev/).
+> **This repository is being archived.** Its contents have been split into the correct canonical homes below. No new documentation or spec changes should be made here.
 
-## Quick start
+## Where the content moved
 
-This repository uses [pnpm](https://pnpm.io/) workspaces.
+| What | New canonical home |
+|------|-------------------|
+| Plex Media Server OpenAPI specification | [LukasParke/plex-api-spec](https://github.com/LukasParke/plex-api-spec) |
+| User-facing guides, API reference site, and tutorials | [LukasParke/plex-mintlify-docs](https://github.com/LukasParke/plex-mintlify-docs) |
 
-```bash
-pnpm install
-pnpm docs:dev
-```
+## What remains here
 
-Open `http://localhost:5173` to preview the site.
+This repository currently keeps the original SDK prototype packages under `sdks/` and a few internal runbook/roadmap files. Those will move to a dedicated SDKs repository in a follow-up effort.
 
-## Available scripts
+## Recommended next step
 
-| Script | Description |
-|--------|-------------|
-| `pnpm docs:dev` | Start local development server |
-| `pnpm docs:build` | Build static site for production |
-| `pnpm docs:preview` | Preview the production build locally |
-| `pnpm spec:validate` | Validate the OpenAPI spec |
-| `pnpm spec:lint` | Lint the OpenAPI spec with Spectral |
-| `pnpm spec:diff` | Dry-run breaking-change detection |
-| `pnpm spec:generate-reference` | Regenerate `docs/reference/endpoints.md` from the spec |
-| `pnpm sdk:generate` | Regenerate SDK types from the spec |
-| `pnpm sdk:build` | Build all SDK packages |
-| `pnpm sdk:test` | Run all SDK tests |
-
-## Project layout
-
-```
-.
-├── .github/workflows/      # CI checks
-├── docs/
-│   ├── .vitepress/         # VitePress theme and nav configuration
-│   ├── guide/              # Developer guides
-│   ├── reference/          # API reference
-│   ├── design/             # Architecture and design docs
-│   ├── public/             # Static assets
-│   ├── index.md            # Landing page
-│   ├── contributing.md     # How to add or edit content
-│   └── deploy.md           # Deploy target documentation
-├── spec/
-│   └── plex-media-server.openapi.json   # canonical OpenAPI 3.1 contract
-├── sdks/
-│   ├── typescript/         # @plexapi/sdk
-│   ├── python/             # plexapi-sdk
-│   └── go/                 # github.com/plexapi/plexapi-go
-├── scripts/                # Spec validation, lint, diff, and reference generation
-├── package.json
-└── README.md
-```
-
-## Contributing
-
-See [docs/contributing.md](./docs/contributing.md) for content authoring guidelines.
-
-## Deployment
-
-The docs are deployed to **Cloudflare Pages** automatically via GitHub Actions. Production deploys run on every push to `main`, and pull requests receive a unique preview URL.
-
-Required secrets:
-
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
-
-See [docs/deploy.md](./docs/deploy.md) for full details.
+After the outstanding pull requests that perform the migration are merged, this repository should be **archived** on GitHub to prevent future divergence.
