@@ -13,7 +13,7 @@ This assessment evaluates the health, maturity, and strategic fit of those SDK r
 - **All eight SDKs are Speakeasy-generated** from the same OpenAPI spec, with automated generation workflows.
 - **TypeScript (`plexjs`) is the most adopted** by a wide margin (51 stars, ~13.8k npm downloads in the trailing year).
 - **Swift (`plexswift`) is archived** and effectively unmaintained.
-- **Java (`plexjava`) ships without an open-source license**, creating a legal risk for adopters.
+- **Java (`plexjava`) now has an MIT open-source license**; the legal gap identified in PLE-42 has been resolved.
 - **PHP (`plexphp`) and Ruby (`plexruby`) are stale**, with no code pushes since late 2025.
 - **Python, Go, C#, TypeScript** are actively regenerated (last pushes in May 2026).
 
@@ -43,7 +43,7 @@ Data collected via the GitHub REST API and npm registry on 2026-06-13.
 | Python | [plexpy](https://github.com/LukeHagar/plexpy) | `plex-api-client` PyPI | 28 | 2 | 4 | 2026-05-20 | v0.34.3 (2026-05-19) | MIT | Active |
 | Go | [plexgo](https://github.com/LukeHagar/plexgo) | module | 35 | 8 | 4 | 2026-05-19 | v0.28.6 (2026-05-19) | MIT | Active |
 | C# | [plexcsharp](https://github.com/LukeHagar/plexcsharp) | Releases only | 17 | 5 | 2 | 2026-05-19 | v0.20.8 (2026-05-19) | MIT | Active |
-| Java | [plexjava](https://github.com/LukeHagar/plexjava) | Releases only | 15 | 1 | 3 | 2026-05-19 | v0.22.7 (2026-05-19) | **None** | Active but unlicensed |
+| Java | [plexjava](https://github.com/LukeHagar/plexjava) | Releases only | 15 | 1 | 3 | 2026-05-19 | v0.22.7 (2026-05-19) | MIT | Active |
 | Ruby | [plexruby](https://github.com/LukeHagar/plexruby) | Releases only | 8 | 0 | 0 | 2026-05-18 | v0.17.1 (2025-09-16) | MIT | Stale release |
 | PHP | [plexphp](https://github.com/LukeHagar/plexphp) | Releases only | 6 | 2 | 1 | 2025-10-12 | v0.14.13 (2025-09-16) | MIT | Stale |
 | Swift | [plexswift](https://github.com/LukeHagar/plexswift) | Releases only | 15 | 8 | 1 | 2025-10-12 | v0.10.5 (2025-03-10) | MIT | **Archived** |
@@ -68,8 +68,8 @@ Data collected via the GitHub REST API and npm registry on 2026-06-13.
 - **Lowest absolute adoption** among active repos (17 stars).
 
 ### 3.5 Java (`plexjava`)
-- **Critical legal gap**: no `LICENSE` or `LICENSE.md` file in the default branch. GitHub API reports `license: null`.
-- Active regeneration but **not safe to recommend** until a license is added.
+- **License gap resolved**: an MIT `LICENSE.md` file was added via [LukasParke/plexjava#10](https://github.com/LukasParke/plexjava/pull/10) and GitHub now reports `license: MIT`.
+- Active regeneration and now safe to recommend alongside the other MIT-licensed Plex SDKs.
 
 ### 3.6 Ruby (`plexruby`)
 - **No open issues**, but latest release is from 2025-09-16 while branch was pushed 2026-05-18. Similar release/tag inconsistency as TypeScript.
@@ -111,7 +111,7 @@ The current PlexAPI.dev strategy (`sdk-generation-strategy.md`) proposes a **hyb
 | Hand-written ergonomic wrappers | ❌ Not present |
 | Security: token redaction, HTTPS defaults | ❌ Not assessed; would need audit |
 | Phase 2 languages (Rust) | ❌ Rust SDK not listed |
-| License clarity across all SDKs | ❌ Java is unlicensed |
+| License clarity across all SDKs | ✅ Java license gap resolved (PLE-42); all listed SDKs now have an MIT license |
 
 ### 5.3 Recommendations
 1. **Resolve the Java license gap immediately** by opening an issue/PR against `LukeHagar/plexjava` to add an MIT `LICENSE` file, or exclude it from PlexAPI.dev recommendations until fixed.
@@ -125,7 +125,7 @@ The current PlexAPI.dev strategy (`sdk-generation-strategy.md`) proposes a **hyb
 
 | Risk | Severity | Owner / Next Step |
 |------|----------|-------------------|
-| `plexjava` has no license | High | Contact maintainer or open PR; do not endorse until resolved |
+| `plexjava` had no license | High | Resolved — MIT `LICENSE.md` added and verified via GitHub API (PLE-42) |
 | `plexswift` archived, still listed | Medium | Deprecated in PlexAPI.dev SDK listings ([PLE-41](/PLE/issues/PLE-41)); remove row once the directory is regenerated |
 | PHP/Ruby stale releases | Medium | Audit whether they still compile against latest spec |
 | Release/tag drift (TS, Ruby) | Low-Medium | Document expected install source (release vs. HEAD) |
