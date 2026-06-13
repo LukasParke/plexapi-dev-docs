@@ -37,9 +37,17 @@ Accept: application/json
 
 | Endpoint | Description |
 |----------|-------------|
-| `GET /` | Server identity and capabilities |
+| `GET /identity` | Server identity (unauthenticated) |
+| `GET /` | Server information and capabilities |
 | `GET /library/sections` | List media libraries |
 | `GET /library/sections/{id}/all` | List all items in a library |
+| `GET /library/sections/{id}/search` | Search within a library |
+| `POST /library/sections/{id}/refresh` | Refresh library metadata |
+| `GET /library/metadata/{id}` | Item metadata |
+| `GET /library/metadata/{id}/children` | Child items (seasons, episodes, etc.) |
+| `GET /playlists` | List playlists |
+| `GET /playlists/{id}/items` | Playlist items |
+| `GET /hubs/search` | Global search across hubs |
 | `GET /status/sessions` | Active playback sessions |
 
 ## Machine-readable contract
@@ -48,4 +56,4 @@ The project maintains an OpenAPI 3.1 description of core endpoints in [`spec/ple
 
 ## Status
 
-This reference section is actively being expanded. The [Endpoints](./endpoints/) page lists the currently documented operations; full request/response schemas will land as the contract matures.
+This reference section is actively being expanded. The [Endpoints](./endpoints/) page lists the currently documented operations; request/response schemas are modeled in the OpenAPI contract and will gain field-level documentation as the contract matures.
