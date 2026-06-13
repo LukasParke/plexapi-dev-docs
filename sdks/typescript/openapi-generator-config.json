@@ -1,0 +1,8 @@
+{
+  "supportsES6": true,
+  "npmName": "@plexapi/sdk-generated",
+  "typescriptThreePlus": true,
+  "modelPropertyNaming": "original",
+  "paramNaming": "camelCase",
+  "withInterfaces": true
+}

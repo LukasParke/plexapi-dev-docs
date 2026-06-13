@@ -48,6 +48,18 @@
     {
       "name": "Sessions",
       "description": "Active playback sessions and transcoding status."
+    },
+    {
+      "name": "Metadata",
+      "description": "Item-level metadata and relationships."
+    },
+    {
+      "name": "Playlists",
+      "description": "Playlists and playlist items."
+    },
+    {
+      "name": "Hub",
+      "description": "Global and per-library search hubs."
     }
   ],
   "paths": {
@@ -57,6 +69,7 @@
         "summary": "Get server identity",
         "description": "Returns the server's identity, including its unique Machine Identifier. This endpoint does not require authentication and is commonly used for server discovery.",
         "tags": ["Server"],
+        "x-plex-resource": "Server",
         "security": [],
         "parameters": [
           {
@@ -83,6 +96,7 @@
         "summary": "Get server information",
         "description": "Returns the server root MediaContainer, including friendly name, platform, version, and available features.",
         "tags": ["Server"],
+        "x-plex-resource": "Server",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptHeader"
@@ -108,6 +122,7 @@
         "summary": "List library sections",
         "description": "Returns all configured library sections (movies, TV shows, music, photos, etc.).",
         "tags": ["Library"],
+        "x-plex-resource": "Library",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptHeader"
@@ -133,6 +148,7 @@
         "summary": "List items in a library section",
         "description": "Returns all items within a specific library section. Use query parameters such as `type` and `includeCollections` to narrow results.",
         "tags": ["Library"],
+        "x-plex-resource": "Library",
         "parameters": [
           {
             "name": "sectionKey",
@@ -178,6 +194,154 @@
         }
       }
     },
+    "/library/sections/{sectionKey}/refresh": {
+      "post": {
+        "operationId": "refreshLibrarySection",
+        "summary": "Refresh a library section",
+        "description": "Triggers a metadata refresh for the specified library section.",
+        "tags": ["Library"],
+        "x-plex-resource": "Library",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "description": "Force a full metadata refresh.",
+            "schema": {
+              "type": "integer",
+              "enum": [0, 1]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Refresh accepted."
+          }
+        }
+      }
+    },
+    "/library/sections/{sectionKey}/search": {
+      "get": {
+        "operationId": "searchLibrarySection",
+        "summary": "Search within a library section",
+        "description": "Returns search results scoped to a single library section.",
+        "tags": ["Hub"],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "name": "sectionKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the library section.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query string.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section search results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/metadata/{ratingKey}": {
+      "get": {
+        "operationId": "getMetadata",
+        "summary": "Get metadata for an item",
+        "description": "Returns full metadata for a single item by its rating key.",
+        "tags": ["Metadata"],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Item metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadata"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library/metadata/{ratingKey}/children": {
+      "get": {
+        "operationId": "getMetadataChildren",
+        "summary": "Get children of an item",
+        "description": "Returns child items for a metadata object, such as seasons of a show or episodes of a season.",
+        "tags": ["Metadata"],
+        "x-plex-resource": "Metadata",
+        "parameters": [
+          {
+            "name": "ratingKey",
+            "in": "path",
+            "required": true,
+            "description": "The rating key of the parent item.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Child items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerMetadataChildren"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/status/sessions": {
       "get": {
         "operationId": "getSessions",
@@ -197,6 +361,111 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MediaContainerSessions"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlists": {
+      "get": {
+        "operationId": "getPlaylists",
+        "summary": "List playlists",
+        "description": "Returns all playlists for the authenticated user.",
+        "tags": ["Playlists"],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Playlists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlists/{playlistKey}/items": {
+      "get": {
+        "operationId": "getPlaylistItems",
+        "summary": "Get playlist items",
+        "description": "Returns the items contained in a playlist.",
+        "tags": ["Playlists"],
+        "x-plex-resource": "Playlists",
+        "parameters": [
+          {
+            "name": "playlistKey",
+            "in": "path",
+            "required": true,
+            "description": "The key of the playlist.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Playlist items.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerPlaylistItems"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hubs/search": {
+      "get": {
+        "operationId": "searchHubs",
+        "summary": "Global search across hubs",
+        "description": "Returns search results grouped by hub across all libraries.",
+        "tags": ["Hub"],
+        "x-plex-resource": "Hub",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query string.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum results per hub.",
+            "schema": {
+              "type": "integer",
+              "default": 5
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Grouped search results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaContainerHub"
                 }
               }
             }
@@ -702,6 +971,410 @@
           },
           "primaryExtraKey": {
             "type": "string"
+          },
+          "Media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Media"
+            }
+          },
+          "Genre": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Director": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Writer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "Role": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "description": "Media container describing one or more file parts for a metadata item.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "bitrate": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "aspectRatio": {
+            "type": "number"
+          },
+          "audioChannels": {
+            "type": "integer"
+          },
+          "audioCodec": {
+            "type": "string"
+          },
+          "videoCodec": {
+            "type": "string"
+          },
+          "videoResolution": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string"
+          },
+          "videoFrameRate": {
+            "type": "string"
+          },
+          "Part": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Part"
+            }
+          }
+        }
+      },
+      "Part": {
+        "type": "object",
+        "description": "A single media file part.",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "file": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "container": {
+            "type": "string"
+          },
+          "videoProfile": {
+            "type": "string"
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "description": "A tag such as a genre, director, writer, or actor.",
+        "properties": {
+          "tag": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerMetadata": {
+        "type": "object",
+        "description": "Root wrapper for a single metadata item response.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/MetadataItem"
+          }
+        }
+      },
+      "MetadataItem": {
+        "type": "object",
+        "description": "A single metadata item wrapper.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "allowSync": {
+            "type": "boolean"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "librarySectionID": {
+            "type": "integer"
+          },
+          "librarySectionTitle": {
+            "type": "string"
+          },
+          "librarySectionUUID": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerMetadataChildren": {
+        "type": "object",
+        "description": "Root wrapper for metadata child item listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/MetadataChildren"
+          }
+        }
+      },
+      "MetadataChildren": {
+        "type": "object",
+        "description": "Collection of child metadata items.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "librarySectionID": {
+            "type": "integer"
+          },
+          "librarySectionTitle": {
+            "type": "string"
+          },
+          "librarySectionUUID": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "viewGroup": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerPlaylists": {
+        "type": "object",
+        "description": "Root wrapper for playlist listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Playlists"
+          }
+        }
+      },
+      "Playlists": {
+        "type": "object",
+        "description": "Collection of playlists.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Playlist"
+            }
+          }
+        }
+      },
+      "Playlist": {
+        "type": "object",
+        "description": "A single playlist.",
+        "properties": {
+          "ratingKey": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["playlist"]
+          },
+          "playlistType": {
+            "type": "string",
+            "enum": ["video", "audio", "photo"]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "smart": {
+            "type": "boolean"
+          },
+          "leafCount": {
+            "type": "integer"
+          },
+          "addedAt": {
+            "type": "integer"
+          },
+          "updatedAt": {
+            "type": "integer"
+          }
+        }
+      },
+      "MediaContainerPlaylistItems": {
+        "type": "object",
+        "description": "Root wrapper for playlist item listings.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/PlaylistItems"
+          }
+        }
+      },
+      "PlaylistItems": {
+        "type": "object",
+        "description": "Collection of items in a playlist.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "totalSize": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "mediaTagPrefix": {
+            "type": "string"
+          },
+          "mediaTagVersion": {
+            "type": "integer"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
+          }
+        }
+      },
+      "MediaContainerHub": {
+        "type": "object",
+        "description": "Root wrapper for hub/search results.",
+        "properties": {
+          "MediaContainer": {
+            "$ref": "#/components/schemas/Hub"
+          }
+        }
+      },
+      "Hub": {
+        "type": "object",
+        "description": "Collection of search hubs.",
+        "properties": {
+          "size": {
+            "type": "integer"
+          },
+          "identifier": {
+            "type": "string"
+          },
+          "title1": {
+            "type": "string"
+          },
+          "title2": {
+            "type": "string"
+          },
+          "Hub": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubEntry"
+            }
+          }
+        }
+      },
+      "HubEntry": {
+        "type": "object",
+        "description": "A single hub grouping within a search response.",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "hubIdentifier": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "Metadata": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MediaItem"
+            }
           }
         }
       },

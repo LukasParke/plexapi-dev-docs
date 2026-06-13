@@ -7,55 +7,34 @@ Server API ecosystem.
 
 ```
 .
-├── docs/                        # VitePress documentation site (plexapi.dev)
+├── src/                         # Starlight (Astro) documentation site (plexapi.dev)
 ├── spec/                        # Canonical OpenAPI spec for Plex Media Server
 │   └── plex-media-server.openapi.json
 ├── sdks/                        # Language SDK packages
-│   ├── typescript/              # @plexapi/sdk
-│   ├── python/                  # plexapi-sdk
-│   └── go/                      # github.com/plexapi/plexapi-go
+│   └── typescript/              # @plexapi/sdk
 ├── scripts/                     # Shared spec validation and reference generation
 └── .github/workflows/           # CI/CD
 ```
 
 ## Quick start
 
-This repository uses [pnpm](https://pnpm.io/) workspaces and [Turborepo](https://turbo.build/).
+This repository uses [pnpm](https://pnpm.io/) workspaces.
 
 ```bash
 pnpm install
-pnpm spec:validate
-pnpm sdk:build
+pnpm run docs:dev
 ```
 
-## Documentation site
+## Available scripts
 
-```bash
-pnpm docs:dev
-```
-
-Open `http://localhost:5173` to preview the site.
-
-## SDK packages
-
-| Language | Package | Status |
-|----------|---------|--------|
-| TypeScript/JavaScript | [`@plexapi/sdk`](./sdks/typescript) | Proof of concept |
-| Python | [`plexapi-sdk`](./sdks/python) | Placeholder |
-| Go | [`github.com/plexapi/plexapi-go`](./sdks/go) | Placeholder |
-
-## Canonical OpenAPI spec
-
-`spec/plex-media-server.openapi.json` is the single source of truth for the API
-contract consumed by the SDK generator and the documentation site.
-
-- Validate it with `pnpm spec:validate`.
-- Regenerate the endpoints reference with `pnpm spec:generate-reference`.
+| Script | Description |
+|--------|-------------|
+| `pnpm run docs:dev` | Start the docs development server |
+| `pnpm run docs:build` | Build the static docs site |
+| `pnpm run docs:preview` | Preview the production docs build |
+| `pnpm run spec:validate` | Validate the OpenAPI spec |
+| `pnpm run spec:generate-reference` | Regenerate `src/content/docs/reference/endpoints.md` |
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## License
-
-[MIT](./LICENSE)
+See [src/content/docs/contributing.md](./src/content/docs/contributing.md).

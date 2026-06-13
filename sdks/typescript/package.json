@@ -16,12 +16,13 @@
     }
   },
   "scripts": {
-    "generate:types": "openapi-typescript ../../schemas/plex-media-server.openapi.json -o src/types/openapi.ts",
+    "generate": "openapi-typescript ../../spec/plex-media-server.openapi.json -o src/types/openapi.ts",
+    "generate:core": "openapi-generator-cli generate -i ../../spec/plex-media-server.openapi.json -g typescript-fetch -c openapi-generator-config.json -o generated/core -t templates/typescript-fetch",
     "build": "tsc",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "example": "tsx examples/quickstart.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "plex",

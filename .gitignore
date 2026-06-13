@@ -1,7 +1,6 @@
 # build output
 dist/
 .astro/
-docs/.vitepress/cache
 
 # dependencies
 node_modules/
@@ -15,9 +14,6 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
-
-# package manager lock files we are not using
-pnpm-lock.yaml
 
 # macOS-specific files
 .DS_Store
