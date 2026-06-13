@@ -4,6 +4,26 @@
  */
 
 export interface paths {
+    "/identity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get server identity
+         * @description Returns the server's identity, including its unique Machine Identifier. This endpoint does not require authentication and is commonly used for server discovery.
+         */
+        get: operations["getIdentity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -11,8 +31,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get server identity and capabilities */
-        get: operations["getServerIdentity"];
+        /**
+         * Get server information
+         * @description Returns the server root MediaContainer, including friendly name, platform, version, and available features.
+         */
+        get: operations["getServerInfo"];
         put?: never;
         post?: never;
         delete?: never;
@@ -28,7 +51,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List media libraries */
+        /**
+         * List library sections
+         * @description Returns all configured library sections (movies, TV shows, music, photos, etc.).
+         */
         get: operations["getLibrarySections"];
         put?: never;
         post?: never;
@@ -38,14 +64,17 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/library/sections/{sectionId}/all": {
+    "/library/sections/{sectionKey}/all": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** List all items in a library */
+        /**
+         * List items in a library section
+         * @description Returns all items within a specific library section. Use query parameters such as `type` and `includeCollections` to narrow results.
+         */
         get: operations["getLibraryItems"];
         put?: never;
         post?: never;
@@ -55,7 +84,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/library/sections/{sectionId}/refresh": {
+    "/library/sections/{sectionKey}/refresh": {
         parameters: {
             query?: never;
             header?: never;
@@ -64,8 +93,31 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Refresh a library section */
+        /**
+         * Refresh a library section
+         * @description Triggers a metadata refresh for the specified library section.
+         */
         post: operations["refreshLibrarySection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search within a library section
+         * @description Returns search results scoped to a single library section.
+         */
+        get: operations["searchLibrarySection"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -79,7 +131,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get metadata for an item */
+        /**
+         * Get metadata for an item
+         * @description Returns full metadata for a single item by its rating key.
+         */
         get: operations["getMetadata"];
         put?: never;
         post?: never;
@@ -96,7 +151,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get children of an item (e.g., seasons of a show) */
+        /**
+         * Get children of an item
+         * @description Returns child items for a metadata object, such as seasons of a show or episodes of a season.
+         */
         get: operations["getMetadataChildren"];
         put?: never;
         post?: never;
@@ -113,7 +171,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get active playback sessions */
+        /**
+         * List active sessions
+         * @description Returns currently active playback sessions, including player state, user, and media being played.
+         */
         get: operations["getSessions"];
         put?: never;
         post?: never;
@@ -130,7 +191,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List playlists */
+        /**
+         * List playlists
+         * @description Returns all playlists for the authenticated user.
+         */
         get: operations["getPlaylists"];
         put?: never;
         post?: never;
@@ -140,14 +204,17 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/playlists/{playlistId}/items": {
+    "/playlists/{playlistKey}/items": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get items in a playlist */
+        /**
+         * Get playlist items
+         * @description Returns the items contained in a playlist.
+         */
         get: operations["getPlaylistItems"];
         put?: never;
         post?: never;
@@ -164,7 +231,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Global search across hubs */
+        /**
+         * Global search across hubs
+         * @description Returns search results grouped by hub across all libraries.
+         */
         get: operations["searchHubs"];
         put?: never;
         post?: never;
@@ -178,87 +248,183 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        MediaContainer: {
-            /** @description Number of items returned */
+        /** @description Root wrapper for identity responses. */
+        MediaContainerIdentity: {
+            MediaContainer?: components["schemas"]["Identity"];
+        };
+        /** @description Server identity details. */
+        Identity: {
             size?: number;
-            /** @description Total number of items available */
-            totalSize?: number;
-            /** @description Offset of the current page */
-            offset?: number;
-            /** @description API identifier, typically 'com.plexapp.plugins.library' */
+            claimed?: boolean;
+            /** @description Unique machine identifier for this server. */
+            machineIdentifier?: string;
+            version?: string;
+        };
+        /** @description Root wrapper for server root responses. */
+        MediaContainerServer: {
+            MediaContainer?: components["schemas"]["ServerInfo"];
+        };
+        /** @description Server-level status and capabilities. */
+        ServerInfo: {
+            size?: number;
+            allowCameraUpload?: boolean;
+            allowMediaDeletion?: boolean;
+            allowSharing?: boolean;
+            allowSync?: boolean;
+            backgroundProcessing?: boolean;
+            certificate?: boolean;
+            companionProxy?: boolean;
+            countryCode?: string;
+            diagnostics?: string;
+            eventSource?: boolean;
+            friendlyName?: string;
+            livetv?: number;
+            machineIdentifier?: string;
+            myPlex?: boolean;
+            myPlexMappingState?: string;
+            myPlexSigninState?: string;
+            myPlexSubscription?: boolean;
+            myPlexUsername?: string;
+            offlineTranscode?: number;
+            ownerFeatures?: string;
+            photoAutoTag?: boolean;
+            platform?: string;
+            platformVersion?: string;
+            pluginHost?: boolean;
+            pushNotifications?: boolean;
+            readOnlyLibraries?: boolean;
+            streamingBrainVersion?: number;
+            sync?: boolean;
+            transcoderActiveVideoSessions?: number;
+            transcoderAudio?: boolean;
+            transcoderLyrics?: boolean;
+            transcoderPhoto?: boolean;
+            transcoderSubtitles?: boolean;
+            transcoderVideo?: boolean;
+            /** @description Unix timestamp of the last server update. */
+            updatedAt?: number;
+            updater?: boolean;
+            version?: string;
+            voiceSearch?: boolean;
+            Directory?: components["schemas"]["ServerCapability"][];
+        };
+        /** @description A capability or service exposed by the server root. */
+        ServerCapability: {
+            count?: number;
+            key?: string;
+            title?: string;
+        };
+        /** @description Root wrapper for library section listings. */
+        MediaContainerLibrarySections: {
+            MediaContainer?: components["schemas"]["LibrarySections"];
+        };
+        /** @description Collection of library sections. */
+        LibrarySections: {
+            size?: number;
+            allowSync?: boolean;
+            art?: string;
             identifier?: string;
             mediaTagPrefix?: string;
             mediaTagVersion?: number;
-            /** @description Primary title for the container */
             title1?: string;
-            /** @description Secondary title for the container */
             title2?: string;
-            Directory?: components["schemas"]["Directory"][];
-            Video?: components["schemas"]["Video"][];
-            Track?: components["schemas"]["Track"][];
-            Photo?: components["schemas"]["Photo"][];
-            Playlist?: components["schemas"]["Playlist"][];
-            Hub?: components["schemas"]["Hub"][];
+            Directory?: components["schemas"]["LibrarySection"][];
         };
-        /** @description Represents a library or collection */
-        Directory: {
-            key?: string;
-            title?: string;
+        /** @description A single library section (movie, show, artist, photo). */
+        LibrarySection: {
+            allowSync?: boolean;
+            art?: string;
+            composite?: string;
+            filters?: boolean;
+            refreshing?: boolean;
+            thumb?: string;
             /** @enum {string} */
             type?: "movie" | "show" | "artist" | "photo";
+            title?: string;
+            agent?: string;
+            scanner?: string;
+            language?: string;
             uuid?: string;
             updatedAt?: number;
             createdAt?: number;
             scannedAt?: number;
             content?: boolean;
             directory?: boolean;
+            contentChangedAt?: number;
             hidden?: number;
+            Location?: components["schemas"]["LibrarySectionLocation"][];
         };
-        /** @description Represents a movie or episode */
-        Video: {
+        /** @description Filesystem location backing a library section. */
+        LibrarySectionLocation: {
+            id?: number;
+            path?: string;
+        };
+        /** @description Root wrapper for library item listings. */
+        MediaContainerLibraryItems: {
+            MediaContainer?: components["schemas"]["LibraryItems"];
+        };
+        /** @description Collection of items within a library section. */
+        LibraryItems: {
+            size?: number;
+            allowSync?: boolean;
+            art?: string;
+            identifier?: string;
+            librarySectionID?: number;
+            librarySectionTitle?: string;
+            librarySectionUUID?: string;
+            mediaTagPrefix?: string;
+            mediaTagVersion?: number;
+            nocache?: boolean;
+            offset?: number;
+            totalSize?: number;
+            title1?: string;
+            title2?: string;
+            viewGroup?: string;
+            viewMode?: number;
+            Metadata?: components["schemas"]["MediaItem"][];
+        };
+        /** @description Base fields common to movies, episodes, tracks, and photos. */
+        MediaItem: {
             ratingKey?: string;
             key?: string;
+            parentRatingKey?: string;
+            grandparentRatingKey?: string;
             guid?: string;
+            parentGuid?: string;
+            grandparentGuid?: string;
             /** @enum {string} */
-            type?: "movie" | "episode";
+            type?: "movie" | "show" | "season" | "episode" | "artist" | "album" | "track" | "photo" | "photoalbum";
             title?: string;
+            titleSort?: string;
             summary?: string;
-            rating?: number;
-            year?: number;
             thumb?: string;
             art?: string;
+            banner?: string;
+            theme?: string;
             duration?: number;
             addedAt?: number;
             updatedAt?: number;
+            /** Format: date */
+            originallyAvailableAt?: string;
+            rating?: number;
+            userRating?: number;
+            viewCount?: number;
+            lastViewedAt?: number;
+            year?: number;
+            studio?: string;
+            tagline?: string;
+            contentRating?: string;
+            audienceRating?: number;
+            audienceRatingImage?: string;
+            chapterSource?: string;
+            primaryExtraKey?: string;
             Media?: components["schemas"]["Media"][];
             Genre?: components["schemas"]["Tag"][];
             Director?: components["schemas"]["Tag"][];
             Writer?: components["schemas"]["Tag"][];
             Role?: components["schemas"]["Tag"][];
         };
-        /** @description Represents a music track */
-        Track: {
-            ratingKey?: string;
-            key?: string;
-            /** @enum {string} */
-            type?: "track";
-            title?: string;
-            index?: number;
-            duration?: number;
-            Media?: components["schemas"]["Media"][];
-        };
-        /** @description Represents a photo */
-        Photo: {
-            ratingKey?: string;
-            key?: string;
-            /** @enum {string} */
-            type?: "photo";
-            title?: string;
-            summary?: string;
-            thumb?: string;
-            Media?: components["schemas"]["Media"][];
-        };
-        /** @description Media container for a metadata item */
+        /** @description Media container describing one or more file parts for a metadata item. */
         Media: {
             id?: number;
             duration?: number;
@@ -274,7 +440,7 @@ export interface components {
             videoFrameRate?: string;
             Part?: components["schemas"]["Part"][];
         };
-        /** @description A media part (file) */
+        /** @description A single media file part. */
         Part: {
             id?: number;
             key?: string;
@@ -284,12 +450,62 @@ export interface components {
             container?: string;
             videoProfile?: string;
         };
-        /** @description A tag such as genre, director, actor, etc. */
+        /** @description A tag such as a genre, director, writer, or actor. */
         Tag: {
             tag?: string;
             id?: number;
         };
-        /** @description Represents a playlist */
+        /** @description Root wrapper for a single metadata item response. */
+        MediaContainerMetadata: {
+            MediaContainer?: components["schemas"]["MetadataItem"];
+        };
+        /** @description A single metadata item wrapper. */
+        MetadataItem: {
+            size?: number;
+            allowSync?: boolean;
+            identifier?: string;
+            librarySectionID?: number;
+            librarySectionTitle?: string;
+            librarySectionUUID?: string;
+            mediaTagPrefix?: string;
+            mediaTagVersion?: number;
+            Metadata?: components["schemas"]["MediaItem"][];
+        };
+        /** @description Root wrapper for metadata child item listings. */
+        MediaContainerMetadataChildren: {
+            MediaContainer?: components["schemas"]["MetadataChildren"];
+        };
+        /** @description Collection of child metadata items. */
+        MetadataChildren: {
+            size?: number;
+            totalSize?: number;
+            offset?: number;
+            identifier?: string;
+            librarySectionID?: number;
+            librarySectionTitle?: string;
+            librarySectionUUID?: string;
+            mediaTagPrefix?: string;
+            mediaTagVersion?: number;
+            title1?: string;
+            title2?: string;
+            viewGroup?: string;
+            Metadata?: components["schemas"]["MediaItem"][];
+        };
+        /** @description Root wrapper for playlist listings. */
+        MediaContainerPlaylists: {
+            MediaContainer?: components["schemas"]["Playlists"];
+        };
+        /** @description Collection of playlists. */
+        Playlists: {
+            size?: number;
+            identifier?: string;
+            mediaTagPrefix?: string;
+            mediaTagVersion?: number;
+            title1?: string;
+            title2?: string;
+            Metadata?: components["schemas"]["Playlist"][];
+        };
+        /** @description A single playlist. */
         Playlist: {
             ratingKey?: string;
             key?: string;
@@ -304,26 +520,110 @@ export interface components {
             addedAt?: number;
             updatedAt?: number;
         };
-        /** @description Search result hub */
+        /** @description Root wrapper for playlist item listings. */
+        MediaContainerPlaylistItems: {
+            MediaContainer?: components["schemas"]["PlaylistItems"];
+        };
+        /** @description Collection of items in a playlist. */
+        PlaylistItems: {
+            size?: number;
+            totalSize?: number;
+            offset?: number;
+            identifier?: string;
+            mediaTagPrefix?: string;
+            mediaTagVersion?: number;
+            title1?: string;
+            title2?: string;
+            Metadata?: components["schemas"]["MediaItem"][];
+        };
+        /** @description Root wrapper for hub/search results. */
+        MediaContainerHub: {
+            MediaContainer?: components["schemas"]["Hub"];
+        };
+        /** @description Collection of search hubs. */
         Hub: {
+            size?: number;
+            identifier?: string;
+            title1?: string;
+            title2?: string;
+            Hub?: components["schemas"]["HubEntry"][];
+        };
+        /** @description A single hub grouping within a search response. */
+        HubEntry: {
             key?: string;
             title?: string;
             type?: string;
             hubIdentifier?: string;
             context?: string;
             size?: number;
-            Video?: components["schemas"]["Video"][];
-            Directory?: components["schemas"]["Directory"][];
+            Metadata?: components["schemas"]["MediaItem"][];
+        };
+        /** @description Root wrapper for active session listings. */
+        MediaContainerSessions: {
+            MediaContainer?: components["schemas"]["Sessions"];
+        };
+        /** @description Collection of active playback sessions. */
+        Sessions: {
+            size?: number;
+            Metadata?: components["schemas"]["Session"][];
+        };
+        /** @description An active playback session, extending a media item with player and session details. */
+        Session: components["schemas"]["MediaItem"] & {
+            Session?: {
+                id?: string;
+                bandwidth?: number;
+                location?: string;
+                data?: string;
+            };
+            Player?: {
+                address?: string;
+                device?: string;
+                machineIdentifier?: string;
+                model?: string;
+                platform?: string;
+                platformVersion?: string;
+                product?: string;
+                profile?: string;
+                remotePublicAddress?: string;
+                /** @enum {string} */
+                state?: "playing" | "paused" | "buffering" | "stopped";
+                title?: string;
+                userID?: string;
+                vendor?: string;
+                version?: string;
+                local?: boolean;
+                relayed?: boolean;
+                secure?: boolean;
+                throttled?: boolean;
+            };
+            User?: {
+                id?: string;
+                title?: string;
+                thumb?: string;
+            };
+            TranscodeSession?: {
+                key?: string;
+                throttled?: boolean;
+                complete?: boolean;
+                progress?: number;
+                size?: number;
+                speed?: number;
+                error?: boolean;
+                duration?: number;
+                context?: string;
+                sourceVideoCodec?: string;
+                sourceAudioCodec?: string;
+                videoDecision?: string;
+                audioDecision?: string;
+                protocol?: string;
+                container?: string;
+            };
         };
     };
     responses: never;
     parameters: {
-        /** @description Library section identifier */
-        sectionId: number;
-        /** @description Unique metadata rating key */
-        ratingKey: number;
-        /** @description Playlist identifier */
-        playlistId: number;
+        /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+        AcceptHeader: "application/json" | "application/xml";
     };
     requestBodies: never;
     headers: never;
@@ -331,23 +631,48 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getServerIdentity: {
+    getIdentity: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Server identity */
+            /** @description Server identity. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerIdentity"];
+                };
+            };
+        };
+    };
+    getServerInfo: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Server information. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerServer"];
                 };
             };
         };
@@ -355,20 +680,22 @@ export interface operations {
     getLibrarySections: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description List of libraries */
+            /** @description Library sections. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerLibrarySections"];
                 };
             };
         };
@@ -376,31 +703,30 @@ export interface operations {
     getLibraryItems: {
         parameters: {
             query?: {
-                /** @description Filter by media type (1 = movie, 2 = show, 8 = artist, etc.) */
+                /** @description Filter by media type integer (e.g., 1 for movies, 2 for shows, 8 for artists). */
                 type?: number;
+                /** @description Include collection items in the response. */
+                includeCollections?: 0 | 1;
             };
             header?: {
-                /** @description Page size */
-                "X-Plex-Container-Size"?: number;
-                /** @description Page offset */
-                "X-Plex-Container-Start"?: number;
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
             };
             path: {
-                /** @description Library section identifier */
-                sectionId: components["parameters"]["sectionId"];
+                /** @description The key of the library section, as returned by `/library/sections`. */
+                sectionKey: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Library items */
+            /** @description Library items. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
                 };
             };
         };
@@ -408,19 +734,19 @@ export interface operations {
     refreshLibrarySection: {
         parameters: {
             query?: {
-                /** @description Force metadata refresh */
+                /** @description Force a full metadata refresh. */
                 force?: 0 | 1;
             };
             header?: never;
             path: {
-                /** @description Library section identifier */
-                sectionId: components["parameters"]["sectionId"];
+                /** @description The key of the library section. */
+                sectionKey: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Refresh accepted */
+            /** @description Refresh accepted. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -429,26 +755,57 @@ export interface operations {
             };
         };
     };
-    getMetadata: {
+    searchLibrarySection: {
         parameters: {
-            query?: never;
-            header?: never;
+            query: {
+                /** @description Search query string. */
+                query: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path: {
-                /** @description Unique metadata rating key */
-                ratingKey: components["parameters"]["ratingKey"];
+                /** @description The key of the library section. */
+                sectionKey: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Item metadata */
+            /** @description Section search results. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerHub"];
+                };
+            };
+        };
+    };
+    getMetadata: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Item metadata. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerMetadata"];
                 };
             };
         };
@@ -456,23 +813,25 @@ export interface operations {
     getMetadataChildren: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path: {
-                /** @description Unique metadata rating key */
-                ratingKey: components["parameters"]["ratingKey"];
+                /** @description The rating key of the parent item. */
+                ratingKey: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Child items */
+            /** @description Child items. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerMetadataChildren"];
                 };
             };
         };
@@ -480,20 +839,22 @@ export interface operations {
     getSessions: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Active sessions */
+            /** @description Active sessions. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerSessions"];
                 };
             };
         };
@@ -501,20 +862,22 @@ export interface operations {
     getPlaylists: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description List of playlists */
+            /** @description Playlists. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerPlaylists"];
                 };
             };
         };
@@ -522,23 +885,25 @@ export interface operations {
     getPlaylistItems: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path: {
-                /** @description Playlist identifier */
-                playlistId: components["parameters"]["playlistId"];
+                /** @description The key of the playlist. */
+                playlistKey: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Playlist items */
+            /** @description Playlist items. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerPlaylistItems"];
                 };
             };
         };
@@ -546,25 +911,27 @@ export interface operations {
     searchHubs: {
         parameters: {
             query: {
-                /** @description Search query */
+                /** @description Search query string. */
                 query: string;
-                /** @description Maximum results per hub */
+                /** @description Maximum results per hub. */
                 limit?: number;
             };
-            header?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Search results grouped by hub */
+            /** @description Grouped search results. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["MediaContainer"];
-                    "application/xml": components["schemas"]["MediaContainer"];
+                    "application/json": components["schemas"]["MediaContainerHub"];
                 };
             };
         };

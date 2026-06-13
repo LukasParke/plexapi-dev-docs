@@ -5,7 +5,7 @@ export type Playlists =
   paths["/playlists"]["get"]["responses"][200]["content"]["application/json"];
 
 export type PlaylistItems =
-  paths["/playlists/{playlistId}/items"]["get"]["responses"][200]["content"]["application/json"];
+  paths["/playlists/{playlistKey}/items"]["get"]["responses"][200]["content"]["application/json"];
 
 export class PlaylistsResource {
   constructor(private readonly client: PlexApiHttpClient) {}
@@ -20,8 +20,8 @@ export class PlaylistsResource {
   /**
    * Get items in a playlist.
    */
-  async getItems(playlistId: number): Promise<PlaylistItems> {
-    const path = PlexApiHttpClient.buildPath("/playlists/{playlistId}/items", { playlistId });
+  async getItems(playlistKey: string): Promise<PlaylistItems> {
+    const path = PlexApiHttpClient.buildPath("/playlists/{playlistKey}/items", { playlistKey });
     return this.client.request<PlaylistItems>({ path });
   }
 }

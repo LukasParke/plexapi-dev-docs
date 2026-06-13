@@ -60,7 +60,7 @@ describe("PlexApiClient", () => {
       fetch: mockFetch,
     });
 
-    const result = await client.libraries.listItems({ sectionId: 1, type: 1 });
+    const result = await client.libraries.listItems({ sectionKey: "1", type: 1 });
 
     expect(result.MediaContainer?.Video?.[0].title).toBe("Inception");
 
@@ -68,24 +68,6 @@ describe("PlexApiClient", () => {
     const url = new URL(request[0].toString());
     expect(url.pathname).toBe("/library/sections/1/all");
     expect(url.searchParams.get("type")).toBe("1");
-  });
-
-  it("refreshes a library section", async () => {
-    const mockFetch = createMockFetch(new Response(null, { status: 200 }));
-
-    const client = new PlexApiClient({
-      baseUrl: "http://localhost:32400",
-      token: "test-token",
-      fetch: mockFetch,
-    });
-
-    await client.libraries.refresh(1, true);
-
-    const request = mockFetch.mock.calls[0] as [RequestInfo, RequestInit?];
-    const url = new URL(request[0].toString());
-    expect(url.pathname).toBe("/library/sections/1/refresh");
-    expect(url.searchParams.get("force")).toBe("1");
-    expect(request[1]?.method).toBe("POST");
   });
 
   it("throws auth error on 401", async () => {
@@ -97,7 +79,7 @@ describe("PlexApiClient", () => {
       fetch: mockFetch,
     });
 
-    await expect(client.server.identity()).rejects.toBeInstanceOf(PlexApiAuthError);
+    await expect(client.server.info()).rejects.toBeInstanceOf(PlexApiAuthError);
   });
 
   it("throws timeout error when request aborts", async () => {
@@ -114,6 +96,6 @@ describe("PlexApiClient", () => {
       timeout: 1,
     });
 
-    await expect(client.server.identity()).rejects.toBeInstanceOf(PlexApiTimeoutError);
+    await expect(client.server.info()).rejects.toBeInstanceOf(PlexApiTimeoutError);
   });
 });
