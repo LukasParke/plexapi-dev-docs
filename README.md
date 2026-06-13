@@ -1,40 +1,51 @@
-# PlexAPI.dev
+# PlexAPI.dev Docs
 
-Developer documentation, SDKs, and the canonical OpenAPI spec for the Plex Media
-Server API ecosystem.
-
-## Repository layout
-
-```
-.
-├── src/                         # Starlight (Astro) documentation site (plexapi.dev)
-├── spec/                        # Canonical OpenAPI spec for Plex Media Server
-│   └── plex-media-server.openapi.json
-├── sdks/                        # Language SDK packages
-│   └── typescript/              # @plexapi/sdk
-├── scripts/                     # Shared spec validation and reference generation
-└── .github/workflows/           # CI/CD
-```
+Developer documentation site for [PlexAPI.dev](https://plexapi.dev), built with [VitePress](https://vitepress.dev/).
 
 ## Quick start
 
-This repository uses [pnpm](https://pnpm.io/) workspaces.
-
 ```bash
-pnpm install
-pnpm run docs:dev
+npm install
+npm run docs:dev
 ```
+
+Open `http://localhost:5173` to preview the site.
 
 ## Available scripts
 
 | Script | Description |
 |--------|-------------|
-| `pnpm run docs:dev` | Start the docs development server |
-| `pnpm run docs:build` | Build the static docs site |
-| `pnpm run docs:preview` | Preview the production docs build |
-| `pnpm run spec:validate` | Validate the OpenAPI spec |
-| `pnpm run spec:generate-reference` | Regenerate `src/content/docs/reference/endpoints.md` |
+| `npm run docs:dev` | Start local development server |
+| `npm run docs:build` | Build static site for production |
+| `npm run docs:preview` | Preview the production build locally |
+| `npm run spec:validate` | Validate the OpenAPI spec |
+| `npm run spec:generate-reference` | Regenerate `docs/reference/endpoints.md` from the spec |
+
+## Project layout
+
+```
+.
+├── .github/workflows/      # CI checks
+├── docs/
+│   ├── .vitepress/         # VitePress theme and nav configuration
+│   ├── guide/              # Developer guides
+│   ├── reference/          # API reference
+│   ├── design/             # Architecture and design docs
+│   ├── public/             # Static assets
+│   ├── index.md            # Landing page
+│   ├── contributing.md     # How to add or edit content
+│   └── deploy.md           # Deploy target documentation
+├── spec/
+│   └── plex-media-server.openapi.json
+├── scripts/                # Spec validation and reference generation
+├── package.json
+└── README.md
+```
 
 ## Contributing
 
-See [src/content/docs/contributing.md](./src/content/docs/contributing.md).
+See [docs/contributing.md](./docs/contributing.md) for content authoring guidelines.
+
+## Deployment
+
+See [docs/deploy.md](./docs/deploy.md) for the current deploy target and hosting strategy.

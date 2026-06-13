@@ -1,8 +1,3 @@
----
-title: Introduction
-description: Welcome to the PlexAPI.dev developer documentation.
----
-
 # Introduction
 
 Welcome to the PlexAPI.dev developer documentation. This site helps you integrate with the Plex Media Server API, understand its data model, and use community SDKs and tools.
@@ -22,10 +17,10 @@ PlexAPI.dev is a community initiative to document, simplify, and standardize bui
 Most examples assume:
 
 - A running Plex Media Server you can access.
-- A Plex authentication token (see [Authentication](/guides/authentication/)).
+- A Plex authentication token (see [Authentication](./authentication)).
 - Basic familiarity with REST APIs and JSON.
 
 ## Next steps
 
-- Follow the [Quick Start](/guides/quick-start/) to make your first API call.
-- Browse the [API Reference](/reference/) for endpoint details.
+- Follow the [Quick Start](./quick-start) to make your first API call.
+- Browse the [API Reference](../reference/) for endpoint details.

@@ -1,6 +1,7 @@
 # build output
 dist/
 .astro/
+docs/.vitepress/cache
 
 # dependencies
 node_modules/
@@ -10,6 +11,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# package manager lock files we are not using
+pnpm-lock.yaml
 
 # environment variables
 .env

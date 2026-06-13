@@ -5,6 +5,8 @@ import {
   PlexApiTimeoutError,
 } from "./errors.js";
 import { LibraryResource } from "./resources/library.js";
+import { PlaylistsResource } from "./resources/playlists.js";
+import { SearchResource } from "./resources/search.js";
 import { ServerResource } from "./resources/server.js";
 import { SessionsResource } from "./resources/sessions.js";
 
@@ -31,11 +33,15 @@ export class PlexApiClient {
   readonly server: ServerResource;
   readonly libraries: LibraryResource;
   readonly sessions: SessionsResource;
+  readonly playlists: PlaylistsResource;
+  readonly search: SearchResource;
 
   constructor(options: PlexApiClientOptions) {
     this.http = new PlexApiHttpClient(options);
     this.server = new ServerResource(this.http);
     this.libraries = new LibraryResource(this.http);
     this.sessions = new SessionsResource(this.http);
+    this.playlists = new PlaylistsResource(this.http);
+    this.search = new SearchResource(this.http);
   }
 }
