@@ -11,10 +11,10 @@ export default defineConfig({
       description: 'Developer guides and reference documentation for the Plex Media Server API ecosystem.',
       favicon: '/plexapi-logo.svg',
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/plexapi-dev/docs' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/LukasParke/plexapi-dev-docs' },
       ],
       editLink: {
-        baseUrl: 'https://github.com/plexapi-dev/docs/edit/main/src/content/docs/',
+        baseUrl: 'https://github.com/LukasParke/plexapi-dev-docs/edit/main/src/content/docs/',
       },
       lastUpdated: true,
       sidebar: [

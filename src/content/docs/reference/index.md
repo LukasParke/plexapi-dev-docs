@@ -44,7 +44,7 @@ Accept: application/json
 
 ## Machine-readable contract
 
-The project maintains an OpenAPI 3.1 description of core endpoints in [`spec/plex-media-server.openapi.json`](https://github.com/plexapi-dev/docs/blob/main/spec/plex-media-server.openapi.json). It is the source of truth for generated reference pages and SDKs.
+The project maintains an OpenAPI 3.1 description of core endpoints in [`spec/plex-media-server.openapi.json`](https://github.com/LukasParke/plexapi-dev-docs/blob/main/spec/plex-media-server.openapi.json). It is the source of truth for generated reference pages and SDKs.
 
 ## Status
 

@@ -32,7 +32,7 @@ async function main() {
   lines.push('');
   lines.push('# API Endpoints');
   lines.push('');
-  lines.push('This page is generated from [`spec/plex-media-server.openapi.json`](https://github.com/plexapi-dev/docs/blob/main/spec/plex-media-server.openapi.json).');
+  lines.push('This page is generated from [`spec/plex-media-server.openapi.json`](https://github.com/LukasParke/plexapi-dev-docs/blob/main/spec/plex-media-server.openapi.json).');
   lines.push('Do not edit it by hand; run `pnpm run spec:generate-reference` to regenerate it.');
   lines.push('');
   lines.push('## Overview');
