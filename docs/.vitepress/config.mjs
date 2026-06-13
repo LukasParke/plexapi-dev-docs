@@ -10,7 +10,7 @@ export default defineConfig({
 
   // Ignore Paperclip-internal ticket links used in roadmap/design docs.
   // Real documentation links are still validated by the build.
-  ignoreDeadLinks: [/^\/PLE\//],
+  ignoreDeadLinks: [/^\/PLE\//, /^\/runbooks\//],
 
   themeConfig: {
     logo: '/plexapi-logo.svg',

@@ -136,9 +136,17 @@ export interface paths {
          * @description Returns full metadata for a single item by its rating key.
          */
         get: operations["getMetadata"];
-        put?: never;
+        /**
+         * Update metadata
+         * @description Updates metadata fields for an item.
+         */
+        put: operations["updateMetadata"];
         post?: never;
-        delete?: never;
+        /**
+         * Delete metadata item
+         * @description Removes a metadata item from the library.
+         */
+        delete: operations["deleteMetadata"];
         options?: never;
         head?: never;
         patch?: never;
@@ -197,7 +205,11 @@ export interface paths {
          */
         get: operations["getPlaylists"];
         put?: never;
-        post?: never;
+        /**
+         * Create playlist
+         * @description Creates a new playlist.
+         */
+        post: operations["createPlaylist"];
         delete?: never;
         options?: never;
         head?: never;
@@ -217,7 +229,11 @@ export interface paths {
          */
         get: operations["getPlaylistItems"];
         put?: never;
-        post?: never;
+        /**
+         * Add items to playlist
+         * @description Adds items to a playlist.
+         */
+        post: operations["addPlaylistItems"];
         delete?: never;
         options?: never;
         head?: never;
@@ -238,6 +254,774 @@ export interface paths {
         get: operations["searchHubs"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/myplex/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Plex account
+         * @description Returns the Plex.tv account associated with the server.
+         */
+        get: operations["getMyPlexAccount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List managed accounts
+         * @description Returns managed accounts configured on the server.
+         */
+        get: operations["getAccounts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get server preferences
+         * @description Returns server preference settings.
+         */
+        get: operations["getPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/system/notification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send system notification
+         * @description Sends a system notification to connected clients.
+         */
+        post: operations["sendSystemNotification"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/statistics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get server statistics
+         * @description Returns server usage statistics.
+         */
+        get: operations["getStatistics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/status/sessions/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get session history
+         * @description Returns historical playback sessions.
+         */
+        get: operations["getSessionHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/status/sessions/{sessionKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Terminate a session
+         * @description Stops an active playback session.
+         */
+        delete: operations["terminateSession"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/onDeck": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get global on deck
+         * @description Returns recently added, in-progress content across all libraries.
+         */
+        get: operations["getOnDeck"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/recentlyAdded": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get recently added
+         * @description Returns recently added items across all libraries.
+         */
+        get: operations["getRecentlyAdded"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List library collections
+         * @description Returns collections within a library section.
+         */
+        get: operations["getLibraryCollections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/newest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get newest library items
+         * @description Returns newest items added to a library section.
+         */
+        get: operations["getLibraryNewest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/unwatched": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get unwatched library items
+         * @description Returns unwatched items in a library section.
+         */
+        get: operations["getLibraryUnwatched"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/folder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Browse library folder
+         * @description Returns folder-based browsing results for a library section.
+         */
+        get: operations["getLibraryFolder"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/firstCharacter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get first-character groups
+         * @description Returns first-character groupings for a library section.
+         */
+        get: operations["getLibraryFirstCharacter"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/prefs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get library section preferences
+         * @description Returns preferences for a library section.
+         */
+        get: operations["getLibrarySectionPreferences"];
+        /**
+         * Set library section preferences
+         * @description Updates preferences for a library section.
+         */
+        put: operations["setLibrarySectionPreferences"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/onDeck": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get section on deck
+         * @description Returns on-deck items for a library section.
+         */
+        get: operations["getSectionOnDeck"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}/recentlyAdded": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get section recently added
+         * @description Returns recently added items for a library section.
+         */
+        get: operations["getSectionRecentlyAdded"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/sections/{sectionKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a library section
+         * @description Removes a library section from the server.
+         */
+        delete: operations["deleteLibrarySection"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/metadata/{ratingKey}/tree": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get metadata tree
+         * @description Returns the full ancestor/descendant tree for a metadata item.
+         */
+        get: operations["getMetadataTree"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/metadata/{ratingKey}/posters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get metadata posters
+         * @description Returns available poster images for a metadata item.
+         */
+        get: operations["getMetadataPosters"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/metadata/{ratingKey}/arts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get metadata arts
+         * @description Returns available background art for a metadata item.
+         */
+        get: operations["getMetadataArts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/metadata/{ratingKey}/similar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get similar items
+         * @description Returns items similar to the given metadata item.
+         */
+        get: operations["getMetadataSimilar"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/metadata/{ratingKey}/banner": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get metadata banner
+         * @description Returns the banner image for a metadata item.
+         */
+        get: operations["getMetadataBanner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/library/parts/{partKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get media part details
+         * @description Returns details for a specific media part.
+         */
+        get: operations["getLibraryPart"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/playlists/{playlistKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update playlist
+         * @description Updates playlist metadata.
+         */
+        put: operations["updatePlaylist"];
+        post?: never;
+        /**
+         * Delete playlist
+         * @description Deletes a playlist.
+         */
+        delete: operations["deletePlaylist"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/playlists/{playlistKey}/items/{itemKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove item from playlist
+         * @description Removes an item from a playlist.
+         */
+        delete: operations["removePlaylistItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hubs/sections/{sectionKey}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search within a section hub
+         * @description Returns hub search results scoped to a library section.
+         */
+        get: operations["searchSectionHubs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hubs/promoted": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get promoted hubs
+         * @description Returns promoted hub content.
+         */
+        get: operations["getPromotedHubs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/hubs/home": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get home hubs
+         * @description Returns home screen hub content.
+         */
+        get: operations["getHomeHubs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/photo/:/transcode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Transcode a photo
+         * @description Returns a transcoded photo asset.
+         */
+        get: operations["transcodePhoto"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/video/:/transcode/universal/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get transcode decision
+         * @description Returns a playback transcode decision.
+         */
+        get: operations["getTranscodeDecision"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/video/:/transcode/sessions/{sessionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get transcode session
+         * @description Returns details for an active transcode session.
+         */
+        get: operations["getTranscodeSession"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/:/timeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post playback timeline
+         * @description Reports playback progress to the server.
+         */
+        post: operations["postTimeline"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/:/scrobble": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Scrobble item
+         * @description Marks an item as watched.
+         */
+        post: operations["scrobble"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/:/unscrobble": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unscrobble item
+         * @description Marks an item as unwatched.
+         */
+        post: operations["unscrobble"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/:/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post viewing progress
+         * @description Updates viewing progress for an item.
+         */
+        post: operations["postProgress"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sync/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List sync items
+         * @description Returns configured sync items.
+         */
+        get: operations["getSyncItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sync/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh sync
+         * @description Triggers a refresh of sync items.
+         */
+        post: operations["refreshSync"];
         delete?: never;
         options?: never;
         head?: never;
@@ -619,6 +1403,181 @@ export interface components {
                 container?: string;
             };
         };
+        /** @description Root wrapper for Plex account response. */
+        MediaContainerAccount: {
+            MediaContainer?: components["schemas"]["PlexAccount"];
+        };
+        /** @description Plex.tv account details. */
+        PlexAccount: {
+            size?: number;
+            email?: string;
+            username?: string;
+            thumb?: string;
+            home?: boolean;
+            guest?: boolean;
+            queueEmail?: string;
+        };
+        /** @description Root wrapper for managed accounts response. */
+        MediaContainerAccounts: {
+            MediaContainer?: components["schemas"]["Accounts"];
+        };
+        /** @description Collection of managed accounts. */
+        Accounts: {
+            size?: number;
+            Account?: components["schemas"]["Account"][];
+        };
+        /** @description A managed account. */
+        Account: {
+            id?: number;
+            key?: string;
+            name?: string;
+            defaultAudioLanguage?: string;
+            defaultSubtitleLanguage?: string;
+        };
+        /** @description Root wrapper for preferences response. */
+        MediaContainerPreferences: {
+            MediaContainer?: components["schemas"]["Preferences"];
+        };
+        /** @description Collection of server or section preferences. */
+        Preferences: {
+            size?: number;
+            Setting?: components["schemas"]["Setting"][];
+        };
+        /** @description A single preference setting. */
+        Setting: {
+            id?: string;
+            label?: string;
+            summary?: string;
+            type?: string;
+            default?: unknown;
+            value?: unknown;
+            hidden?: boolean;
+            advanced?: boolean;
+        };
+        /** @description Root wrapper for server statistics. */
+        MediaContainerStatistics: {
+            MediaContainer?: components["schemas"]["Statistics"];
+        };
+        /** @description Server statistics container. */
+        Statistics: {
+            size?: number;
+            Account?: components["schemas"]["StatisticsAccount"][];
+        };
+        /** @description Per-account playback statistics. */
+        StatisticsAccount: {
+            accountID?: number;
+            Device?: components["schemas"]["StatisticsDevice"][];
+        };
+        /** @description Per-device playback statistics. */
+        StatisticsDevice: {
+            deviceName?: string;
+            lastPlayedAt?: number;
+            totalPlays?: number;
+        };
+        /** @description Root wrapper for session history. */
+        MediaContainerSessionHistory: {
+            MediaContainer?: components["schemas"]["SessionHistory"];
+        };
+        /** @description Collection of historical playback sessions. */
+        SessionHistory: {
+            size?: number;
+            totalSize?: number;
+            offset?: number;
+            Metadata?: components["schemas"]["SessionHistoryEntry"][];
+        };
+        /** @description A single historical playback session. */
+        SessionHistoryEntry: {
+            ratingKey?: string;
+            key?: string;
+            parentRatingKey?: string;
+            grandparentRatingKey?: string;
+            title?: string;
+            type?: string;
+            thumb?: string;
+            viewedAt?: number;
+            accountID?: number;
+            deviceID?: number;
+        };
+        /** @description Root wrapper for available images. */
+        MediaContainerImages: {
+            MediaContainer?: components["schemas"]["Images"];
+        };
+        /** @description Collection of available images. */
+        Images: {
+            size?: number;
+            Photo?: components["schemas"]["Image"][];
+        };
+        /** @description An image asset. */
+        Image: {
+            key?: string;
+            ratingKey?: string;
+            selected?: boolean;
+            thumb?: string;
+        };
+        /** @description Root wrapper for media parts. */
+        MediaContainerParts: {
+            MediaContainer?: components["schemas"]["Parts"];
+        };
+        /** @description Collection of media parts. */
+        Parts: {
+            size?: number;
+            Metadata?: components["schemas"]["Part"][];
+        };
+        /** @description Root wrapper for a transcode decision. */
+        MediaContainerTranscodeDecision: {
+            MediaContainer?: components["schemas"]["TranscodeDecision"];
+        };
+        /** @description Playback transcode decision. */
+        TranscodeDecision: {
+            size?: number;
+            canDirectPlay?: boolean;
+            canDirectStream?: boolean;
+            canTranscode?: boolean;
+            transcodeContainer?: string;
+            transcodeVideoCodec?: string;
+            transcodeAudioCodec?: string;
+            transcodeProtocol?: string;
+        };
+        /** @description Root wrapper for transcode session details. */
+        MediaContainerTranscodeSession: {
+            MediaContainer?: components["schemas"]["TranscodeSession"];
+        };
+        /** @description Details of an active transcode session. */
+        TranscodeSession: {
+            key?: string;
+            throttled?: boolean;
+            complete?: boolean;
+            progress?: number;
+            size?: number;
+            speed?: number;
+            error?: boolean;
+            duration?: number;
+            context?: string;
+            sourceVideoCodec?: string;
+            sourceAudioCodec?: string;
+            videoDecision?: string;
+            audioDecision?: string;
+            protocol?: string;
+            container?: string;
+        };
+        /** @description Root wrapper for sync items. */
+        MediaContainerSyncItems: {
+            MediaContainer?: components["schemas"]["SyncItems"];
+        };
+        /** @description Collection of sync items. */
+        SyncItems: {
+            size?: number;
+            SyncItem?: components["schemas"]["SyncItem"][];
+        };
+        /** @description A sync item. */
+        SyncItem: {
+            id?: number;
+            version?: number;
+            rootTitle?: string;
+            title?: string;
+            status?: string;
+            downloadState?: string[];
+        };
     };
     responses: never;
     parameters: {
@@ -810,6 +1769,56 @@ export interface operations {
             };
         };
     };
+    updateMetadata: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerMetadata"];
+                };
+            };
+        };
+    };
+    deleteMetadata: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Metadata item deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getMetadataChildren: {
         parameters: {
             query?: never;
@@ -882,6 +1891,34 @@ export interface operations {
             };
         };
     };
+    createPlaylist: {
+        parameters: {
+            query: {
+                /** @description Playlist title. */
+                title: string;
+                /** @description Playlist type (video, audio, photo). */
+                type: "video" | "audio" | "photo";
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPlaylists"];
+                };
+            };
+        };
+    };
     getPlaylistItems: {
         parameters: {
             query?: never;
@@ -898,6 +1935,35 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Playlist items. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPlaylistItems"];
+                };
+            };
+        };
+    };
+    addPlaylistItems: {
+        parameters: {
+            query: {
+                /** @description Item URI to add. */
+                uri: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the playlist. */
+                playlistKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -933,6 +1999,1008 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["MediaContainerHub"];
                 };
+            };
+        };
+    };
+    getMyPlexAccount: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerAccount"];
+                };
+            };
+        };
+    };
+    getAccounts: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerAccounts"];
+                };
+            };
+        };
+    };
+    getPreferences: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPreferences"];
+                };
+            };
+        };
+    };
+    sendSystemNotification: {
+        parameters: {
+            query: {
+                /** @description Notification text. */
+                text: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Notification sent. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getStatistics: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerStatistics"];
+                };
+            };
+        };
+    };
+    getSessionHistory: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerSessionHistory"];
+                };
+            };
+        };
+    };
+    terminateSession: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The session key. */
+                sessionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Session terminated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getOnDeck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getRecentlyAdded: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibraryCollections: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibraryNewest: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibraryUnwatched: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibraryFolder: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibraryFirstCharacter: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getLibrarySectionPreferences: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPreferences"];
+                };
+            };
+        };
+    };
+    setLibrarySectionPreferences: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Preferences updated. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getSectionOnDeck: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getSectionRecentlyAdded: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    deleteLibrarySection: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Library section deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getMetadataTree: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerMetadataChildren"];
+                };
+            };
+        };
+    };
+    getMetadataPosters: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerImages"];
+                };
+            };
+        };
+    };
+    getMetadataArts: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerImages"];
+                };
+            };
+        };
+    };
+    getMetadataSimilar: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerLibraryItems"];
+                };
+            };
+        };
+    };
+    getMetadataBanner: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The rating key of the item. */
+                ratingKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Banner image. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getLibraryPart: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the media part. */
+                partKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerParts"];
+                };
+            };
+        };
+    };
+    updatePlaylist: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the playlist. */
+                playlistKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPlaylists"];
+                };
+            };
+        };
+    };
+    deletePlaylist: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the playlist. */
+                playlistKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Playlist deleted. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    removePlaylistItem: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the playlist. */
+                playlistKey: string;
+                /** @description The key of the playlist item. */
+                itemKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerPlaylistItems"];
+                };
+            };
+        };
+    };
+    searchSectionHubs: {
+        parameters: {
+            query: {
+                /** @description Search query string. */
+                query: string;
+                /** @description Maximum results per hub. */
+                limit?: number;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The key of the library section. */
+                sectionKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerHub"];
+                };
+            };
+        };
+    };
+    getPromotedHubs: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerHub"];
+                };
+            };
+        };
+    };
+    getHomeHubs: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerHub"];
+                };
+            };
+        };
+    };
+    transcodePhoto: {
+        parameters: {
+            query: {
+                /** @description Photo URL to transcode. */
+                url: string;
+                /** @description Target width. */
+                width?: number;
+                /** @description Target height. */
+                height?: number;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Transcoded image. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getTranscodeDecision: {
+        parameters: {
+            query?: {
+                /** @description Has media decision engine data. */
+                hasMDE?: 0 | 1;
+                /** @description Media path. */
+                path?: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerTranscodeDecision"];
+                };
+            };
+        };
+    };
+    getTranscodeSession: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path: {
+                /** @description The transcode session ID. */
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerTranscodeSession"];
+                };
+            };
+        };
+    };
+    postTimeline: {
+        parameters: {
+            query: {
+                /** @description Rating key of the item. */
+                ratingKey: string;
+                /** @description Playback state. */
+                state: "playing" | "paused" | "stopped";
+                /** @description Current playback position in milliseconds. */
+                time: number;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Timeline recorded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    scrobble: {
+        parameters: {
+            query: {
+                /** @description Rating key of the item. */
+                ratingKey: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Item scrobbled. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    unscrobble: {
+        parameters: {
+            query: {
+                /** @description Rating key of the item. */
+                ratingKey: string;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Item unscrobbled. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    postProgress: {
+        parameters: {
+            query: {
+                /** @description Rating key of the item. */
+                ratingKey: string;
+                /** @description Progress position in milliseconds. */
+                time: number;
+            };
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Progress recorded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getSyncItems: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaContainerSyncItems"];
+                };
+            };
+        };
+    };
+    refreshSync: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Request JSON responses by setting `application/json`. Plex defaults to XML when omitted. */
+                Accept?: components["parameters"]["AcceptHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sync refresh triggered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

@@ -4,9 +4,11 @@ Developer documentation site for [PlexAPI.dev](https://plexapi.dev), built with 
 
 ## Quick start
 
+This repository uses [pnpm](https://pnpm.io/) workspaces.
+
 ```bash
-npm install
-npm run docs:dev
+pnpm install
+pnpm docs:dev
 ```
 
 Open `http://localhost:5173` to preview the site.
@@ -15,11 +17,16 @@ Open `http://localhost:5173` to preview the site.
 
 | Script | Description |
 |--------|-------------|
-| `npm run docs:dev` | Start local development server |
-| `npm run docs:build` | Build static site for production |
-| `npm run docs:preview` | Preview the production build locally |
-| `npm run spec:validate` | Validate the OpenAPI spec |
-| `npm run spec:generate-reference` | Regenerate `docs/reference/endpoints.md` from the spec |
+| `pnpm docs:dev` | Start local development server |
+| `pnpm docs:build` | Build static site for production |
+| `pnpm docs:preview` | Preview the production build locally |
+| `pnpm spec:validate` | Validate the OpenAPI spec |
+| `pnpm spec:lint` | Lint the OpenAPI spec with Spectral |
+| `pnpm spec:diff` | Dry-run breaking-change detection |
+| `pnpm spec:generate-reference` | Regenerate `docs/reference/endpoints.md` from the spec |
+| `pnpm sdk:generate` | Regenerate SDK types from the spec |
+| `pnpm sdk:build` | Build all SDK packages |
+| `pnpm sdk:test` | Run all SDK tests |
 
 ## Project layout
 
@@ -36,8 +43,12 @@ Open `http://localhost:5173` to preview the site.
 │   ├── contributing.md     # How to add or edit content
 │   └── deploy.md           # Deploy target documentation
 ├── spec/
-│   └── plex-media-server.openapi.json
-├── scripts/                # Spec validation and reference generation
+│   └── plex-media-server.openapi.json   # canonical OpenAPI 3.1 contract
+├── sdks/
+│   ├── typescript/         # @plexapi/sdk
+│   ├── python/             # plexapi-sdk
+│   └── go/                 # github.com/plexapi/plexapi-go
+├── scripts/                # Spec validation, lint, diff, and reference generation
 ├── package.json
 └── README.md
 ```

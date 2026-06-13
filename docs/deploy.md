@@ -62,7 +62,7 @@ The canonical domain is `https://docs.plexapi.dev`. DNS and certificate setup ar
 
 ## Runbook
 
-For credential setup, least-privilege token permissions, verification commands, and rotation ownership, see [`runbooks/cloudflare-credentials.md`](../runbooks/cloudflare-credentials.md).
+For credential setup, least-privilege token permissions, verification commands, and rotation ownership, see [`runbooks/cloudflare-credentials.md`](https://github.com/LukasParke/plexapi-dev-docs/blob/main/runbooks/cloudflare-credentials.md).
 
 ## Future work
 
