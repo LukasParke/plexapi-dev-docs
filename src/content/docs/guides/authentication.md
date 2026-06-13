@@ -5,7 +5,7 @@ description: How to authenticate requests to a Plex Media Server.
 
 # Authentication
 
-Most Plex Media Server API endpoints require an authentication token. This guide explains what Plex tokens are, how to obtain one safely, and how to use and protect it in your integrations.
+Most Plex Media Server API endpoints require an authentication token. This guide explains what Plex tokens are, how to obtain one safely, and how to use and protect them in your integrations.
 
 ## What is a Plex token?
 
@@ -31,7 +31,7 @@ You will need:
 Most local API examples use the server's LAN address:
 
 ```
-http://<server-ip>:32400
+http://\u003cserver-ip\u003e:32400
 ```
 
 If you access Plex through a reverse proxy or remote access, use that HTTPS URL instead. Some requests, such as the root identity endpoint, work without a token; everything under `/library`, `/status`, and most other paths requires one.
@@ -116,12 +116,48 @@ The token you use determines what the API can see:
 
 If your integration behaves differently than expected, confirm the token belongs to the intended account and that the account has permission for the library or action.
 
+## Environment-variable handling
+
+A minimal, safe pattern is to read the token and server URL from the environment at startup and fail fast if either is missing:
+
+```js
+const serverUrl = process.env.PLEX_SERVER_URL;
+const token = process.env.PLEX_TOKEN;
+
+if (!serverUrl || !token) {
+  throw new Error("PLEX_SERVER_URL and PLEX_TOKEN are required");
+}
+```
+
+```py
+import os
+
+server_url = os.environ.get("PLEX_SERVER_URL")
+token = os.environ.get("PLEX_TOKEN")
+
+if not server_url or not token:
+    raise ValueError("PLEX_SERVER_URL and PLEX_TOKEN are required")
+```
+
+For local development, use a `.env` file loaded by your application, and add `.env` to `.gitignore`.
+
+## Token rotation
+
+If a token is exposed:
+
+1. Revoke it by signing the affected device or account out of Plex.
+2. Generate or copy a new token using one of the methods above.
+3. Update the token in your secrets manager or environment.
+4. Restart your integration.
+
+For automation that runs on a server, consider using a dedicated managed user or app-specific token where possible so rotation does not affect your personal devices.
+
 ## Security best practices
 
 Treat your Plex token like a password. Anyone with the token can act as you on that server.
 
 - **Never commit tokens to source control.** Load them from environment variables or a secrets manager.
-- **Never expose tokens in public documentation, screenshots, or examples.** Use placeholder values such as `<your-token>`.
+- **Never expose tokens in public documentation, screenshots, or examples.** Use placeholder values such as `\u003cyour-token\u003e`.
 - **Prefer HTTPS when accessing a server remotely.** HTTP is acceptable on trusted local networks, but it sends the token in plain text.
 - **Rotate tokens if you suspect leakage.** You can sign out other devices from your Plex account settings, which invalidates existing tokens.
 - **Scope tokens by user.** When building tools for others, authenticate as that user rather than reusing an owner token.

@@ -38,10 +38,13 @@ This file is the single source of truth. Reference docs under `src/content/docs/
 
 ## Scope
 
-The initial contract covers the most-used Plex endpoints:
+The contract currently covers the most-used Plex endpoints:
 
 - **Server** — identity (`/identity`) and server info (`/`)
-- **Library** — sections (`/library/sections`) and items (`/library/sections/{sectionKey}/all`)
+- **Library** — sections (`/library/sections`), items (`/library/sections/{sectionKey}/all`), refresh (`POST /library/sections/{sectionKey}/refresh`), and section search (`/library/sections/{sectionKey}/search`)
+- **Metadata** — item details (`/library/metadata/{ratingKey}`) and children (`/library/metadata/{ratingKey}/children`)
+- **Playlists** — playlists (`/playlists`) and playlist items (`/playlists/{playlistKey}/items`)
+- **Hub** — global search (`/hubs/search`)
 - **Sessions** — active playback sessions (`/status/sessions`)
 
 Each operation includes:
@@ -78,8 +81,7 @@ The contract is validated on every change via `pnpm run spec:validate`. The vali
 
 ## Future work
 
-- Expand coverage to playlists, search, playback control, and Plex.tv account endpoints.
+- Expand coverage to playback control, transcoding, collections, and Plex.tv account endpoints.
 - Add `x-plex-api-since` and `x-plex-api-deprecated` extensions to track Plex server version compatibility.
-- Add `x-plex-resource` tags to group operations by domain for SDK ergonomics.
 - Introduce Spectral linting rules for Plex-specific conventions.
-- Generate reference pages automatically from the spec instead of maintaining hand-written stubs.
+- Add example payloads and recorded-response validation for each endpoint.
