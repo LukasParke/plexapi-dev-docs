@@ -32,4 +32,4 @@ jobs:
       - name: Check generated reference is up to date
         run: |
           pnpm spec:generate-reference
-          git diff --exit-code docs/reference/endpoints.md
+          git diff --exit-code src/content/docs/reference/endpoints.md
